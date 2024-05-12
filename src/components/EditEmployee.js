@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function EditEmployee() {
+function EditEmployee(props) {
+    const [name, setName] = useState(props.name);
+    const [role, setRole] = useState(props.role);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -25,14 +26,31 @@ function EditEmployee() {
                     <Modal.Title>Update Employee</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form id='editmodal' class="max-w-sm w-full">
+                    <form onSubmit={(e) => {
+                        handleClose()
+                        e.preventDefault()
+                        props.updateEmployee(props.id, name, role)
+                    }}
+
+                        id='editmodal' className="max-w-sm w-full">
                         <div className="mb-5">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
-                            <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            <label htmlfor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Full Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                value={name}
+                                onChange={(e) => { setName(e.target.value) }}
+                            />
                         </div>
                         <div className="mb-5">
-                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                            <input type="text" id="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            <label htmlfor="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                            <input
+                                value={role}
+                                type="text" id="role"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                onChange={(e) => { setRole(e.target.value) }}
+                            />
                         </div>
                     </form>
                 </Modal.Body>
@@ -42,7 +60,9 @@ function EditEmployee() {
                         onClick={handleClose}>
                         Close
                     </button>
-                    <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                    <button
+
+                        className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                         form='editmodal'>
                         Update
                     </button>
